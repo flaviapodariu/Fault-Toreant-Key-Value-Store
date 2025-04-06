@@ -1,9 +1,9 @@
 master:
-    ip: 0.0.0.0
+    ip: master
     port: 5001
       
 replicas:
-    - ip: 0.0.0.0
+    - ip: replica1
       port: 5002
-    - ip: 0.0.0.0
+    - ip: replica2
       port: 5003

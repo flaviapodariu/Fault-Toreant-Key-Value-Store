@@ -1,0 +1,49 @@
+services:
+  server:
+    build: 
+      context: ./server
+    ports:
+      - "5000:5000"
+    networks:
+      - keyval-network
+
+  master:
+    build: 
+      context: ./db-master
+    ports:
+      - "5001:5001"
+    container_name: master-db
+    networks:
+      - keyval-network
+    volumes:
+      - ./db-master:/db-master
+
+  replica1:
+    build: 
+      context: ./db-replica
+    ports:
+      - "5002:5002"
+    container_name: replica1-db
+    networks:
+      - keyval-network
+    volumes:
+      - ./db-replica:/db-replica
+    depends_on:
+      - master
+
+  replica2:
+    build: 
+      context: ./db-replica2
+    ports:
+      - "5003:5003"
+    container_name: replica2-db
+    networks:
+      - keyval-network
+    volumes:
+      - ./db-replica2:/db-replica2
+    depends_on:
+      - master
+
+networks:
+  keyval-network:
+    driver: bridge

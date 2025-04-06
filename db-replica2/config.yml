@@ -1,0 +1,7 @@
+master:
+    ip: master
+    port: 5001
+    
+datastore:
+    ip: replica2
+    port: 5003
