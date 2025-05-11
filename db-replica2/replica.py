@@ -74,6 +74,7 @@ def handle_incoming(operation):
         key = operation['key']
         value = operation['value']
         store_data(key, value)
+        print(f"Data succesfully stored")
         log_operation(operation)
 
 def store_data(key, value):

@@ -32,7 +32,7 @@ def handle_client(client_socket, addr):
         value = operation['value']
 
         store_data(key, value)
-
+        print(f"Data succesfully stored")
         log_operation(operation)
 
         replicate_to_replicas(operation)
