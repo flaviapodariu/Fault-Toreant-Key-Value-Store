@@ -1,0 +1,6 @@
+{"uuid": "179012ef-bb8b-4422-9fa1-6ceae5e8573a", "action": "INSERT", "key": "user", "value": "test", "timestamp": "2025-05-12T20:45:43.889861"}
+{"uuid": "c68fadba-f8aa-4aeb-a7ed-d24a5566081b", "action": "INSERT", "key": "user", "value": "test", "timestamp": "2025-05-12T20:46:18.994401"}
+{"uuid": "81d85184-b33b-469e-896c-e9b00952fbe2", "action": "INSERT", "key": "flav", "value": "flv", "timestamp": "2025-05-12T20:46:34.222702"}
+{"uuid": "8e723457-9062-45dd-a580-7f5ba8dced36", "action": "INSERT", "key": "alex", "value": "value", "timestamp": "2025-05-12T20:46:48.556523"}
+{"uuid": "159beb0e-2c76-4268-902e-2e30caa0677e", "action": "INSERT", "key": "other", "value": "test", "timestamp": "2025-05-12T20:46:58.965904"}
+{"uuid": "fff08d85-7af9-43e1-992f-b85ba83b3961", "action": "INSERT", "key": "new", "value": "log", "timestamp": "2025-05-12T20:53:35.081770"}

@@ -3,3 +3,4 @@ flav:flv
 alex:value
 other:test
 new:log
+docker-compose:test

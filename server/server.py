@@ -5,7 +5,7 @@ import uuid
 
 app = Flask(__name__)
 
-MASTER_NODE_IP = "0.0.0.0"
+MASTER_NODE_IP = "master"
 MASTER_NODE_PORT = 5001
 
 @app.route('/pair', methods=['POST'])

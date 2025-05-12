@@ -68,7 +68,7 @@ def recover_operations(s):
 
     if os.path.exists(REPLICA_LOG_FILE):
         replica_logs = open(REPLICA_LOG_FILE, 'r').readlines()
-        last_log = ast.literal_eval(replica_logs[-1].strip())
+        last_log = ast.literal_eval(replica_logs[-1].strip()) if replica_logs else None
         last_uuid = last_log["uuid"] if last_log else None
 
     found_last = False if last_log else True

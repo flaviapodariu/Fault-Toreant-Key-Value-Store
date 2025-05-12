@@ -4,3 +4,4 @@
 {"uuid": "8e723457-9062-45dd-a580-7f5ba8dced36", "action": "INSERT", "key": "alex", "value": "value", "timestamp": "2025-05-12T20:46:48.556523"}
 {"uuid": "159beb0e-2c76-4268-902e-2e30caa0677e", "action": "INSERT", "key": "other", "value": "test", "timestamp": "2025-05-12T20:46:58.965904"}
 {"uuid": "fff08d85-7af9-43e1-992f-b85ba83b3961", "action": "INSERT", "key": "new", "value": "log", "timestamp": "2025-05-12T20:53:35.081770"}
+{"uuid": "cbec0192-0518-476a-b174-3fd304d06aa2", "action": "INSERT", "key": "docker-compose", "value": "test", "timestamp": "2025-05-12T21:52:06.199885"}
