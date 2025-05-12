@@ -3,6 +3,7 @@ import json
 import os
 import yaml
 import logging 
+import ast
 
 cwd = os.path.dirname(__file__)
 config_path = os.path.join(cwd, "config.yml")
@@ -16,16 +17,14 @@ DATA_STORE_FILE = "db-replica.txt"
 
 MASTER_NODE_IP = config["master"]["ip"]
 MASTER_NODE_PORT = config["master"]["port"]
-MASTER_LOG_FILE = os.path.join(cwd, "../db-master/db-master.log")
-
 
 def start_replica(host=REPLICA_IP, port=REPLICA_PORT):
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((host, port))
     s.listen(5)
     print(f"Replica node started on {host}:{port}")
-
-    # recover_operations(s.accept()[0])
+    
+    recover_operations(s)
 
     while True:
         replica_socket, addr = s.accept()
@@ -38,36 +37,49 @@ def start_replica(host=REPLICA_IP, port=REPLICA_PORT):
         operation = json.loads(data.decode('utf-8'))
         handle_incoming(operation)
         
-def get_consistent_logs(socket):
+def get_consistent_logs(socket_master):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
             s.connect((MASTER_NODE_IP, MASTER_NODE_PORT))
             message = json.dumps({"action": "LOGS", "internal_port":REPLICA_PORT})
             s.sendall(message.encode())
+            master_conn =socket_master.accept()[0]
     except Exception as e:
         print("Could not get consistent logs from master")
         logging.error(e)
         raise Exception("Could not get consistent state from master node...")
-    return wait_consistent_logs(socket)
+    return wait_consistent_logs(master_conn)
     
-def wait_consistent_logs(socket):
+def wait_consistent_logs(master_conn):
     while True:
-        master_logs = socket.recv(1024)
+        master_logs = master_conn.recv(1024)
         if not master_logs:
-            socket.close()
             return
         print(f"Fetched recovery logs: {master_logs}")
-        return json.loads(master_logs.decode("utf-8"))
+        return master_logs.decode("unicode_escape").strip("\"").strip().split("\n")
 
 
-def recover_operations(socket):
-    logs = get_consistent_logs(socket)
-    print(logs)
-    # if os.path.exists(MASTER_LOG_FILE):
-    #     with open(MASTER_LOG_FILE, 'r') as log:
-    #         for line in log:
-    #             operation = json.loads(line.strip())
-    #             handle_incoming(operation)
+def recover_operations(s):
+    # list of logs
+    master_logs = get_consistent_logs(s)
+    print(master_logs)
+    last_log = dict()
+    last_uuid = None
+
+    if os.path.exists(REPLICA_LOG_FILE):
+        replica_logs = open(REPLICA_LOG_FILE, 'r').readlines()
+        last_log = ast.literal_eval(replica_logs[-1].strip())
+        last_uuid = last_log["uuid"] if last_log else None
+
+    found_last = False if last_log else True
+
+    for log in master_logs:
+        operation = dict(json.loads(log.strip()))
+        if found_last:
+            handle_incoming(operation)
+        elif operation["uuid"] == last_uuid:
+            found_last = True
+
 
 def handle_incoming(operation):
     if operation['action'] == 'INSERT':
