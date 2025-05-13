@@ -52,7 +52,7 @@ def get_consistent_logs(socket_master):
     
 def wait_consistent_logs(master_conn):
     while True:
-        master_logs = master_conn.recv(1024)
+        master_logs = master_conn.recv(3000)
         if not master_logs:
             return
         print(f"Fetched recovery logs: {master_logs}")
@@ -74,6 +74,7 @@ def recover_operations(s):
     found_last = False if last_log else True
 
     for log in master_logs:
+        print(log)
         operation = dict(json.loads(log.strip()))
         if found_last:
             handle_incoming(operation)

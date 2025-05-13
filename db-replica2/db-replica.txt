@@ -3,4 +3,4 @@ user:test
 flav:flv
 alex:value
 other:test
-new:log
+new:logdocker-compose:test

@@ -3,5 +3,5 @@ master:
     port: 5001
     
 datastore:
-    ip: replica2
+    ip: replica1
     port: 5002
