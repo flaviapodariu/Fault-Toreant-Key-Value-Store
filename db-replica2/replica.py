@@ -62,7 +62,10 @@ def wait_consistent_logs(master_conn):
 def recover_operations(s):
     # list of logs
     master_logs = get_consistent_logs(s)
-    print(master_logs)
+    
+    if master_logs == ['']:
+        return
+    
     last_log = dict()
     last_uuid = None
 

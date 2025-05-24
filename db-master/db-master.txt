@@ -1,6 +1,2 @@
-user:test
-flav:flv
-alex:value
-other:test
 new:log
-docker-compose:test
+new:log
